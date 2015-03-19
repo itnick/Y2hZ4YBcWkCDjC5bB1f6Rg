@@ -15,7 +15,9 @@
     "y2hz4ybcwkcdjc5bb1f6rg",
     "e g n e l l a h C p i h S r e t f A"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "fivebeans": "^1.1.1"
+  },
   "devDependencies": {},
   "scripts": {}
 }
