@@ -17,7 +17,8 @@
   ],
   "dependencies": {
     "config": "^1.12.0",
-    "fivebeans": "^1.1.1"
+    "fivebeans": "^1.1.1",
+    "request": "^2.53.0"
   },
   "devDependencies": {},
   "scripts": {}
