@@ -16,6 +16,7 @@
     "e g n e l l a h C p i h S r e t f A"
   ],
   "dependencies": {
+    "config": "^1.12.0",
     "fivebeans": "^1.1.1"
   },
   "devDependencies": {},
