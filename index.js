@@ -24,6 +24,8 @@ var reput_priority = job_config.reput_priority;
 var reput_delay_for_success = job_config.reput_delay_for_success;
 var reput_delay_for_failure = job_config.reput_delay_for_failure;
 var reput_ttr = job_config.reput_ttr;
+var success_threshold = job_config.success_threshold;
+var failure_threshold = job_config.failure_threshold;
 // XE config
 var xe_config = config.get('currency_exchange_vendors');
 var xe_url = xe_config[0].url;
@@ -180,7 +182,7 @@ var reserveJob = function() {
 		logger.debug('number_of_success: %d', number_of_success);
 		logger.debug('number_of_failure: %d', number_of_failure);
 
-		if (number_of_success === 1 || number_of_failure === 3) {
+		if (number_of_success === success_threshold || number_of_failure === failure_threshold) {
 			mongo_database.close();
 			beanstalkd_client.quit();
 			process.exit();

@@ -21,7 +21,9 @@
     "reput_priority": 1,
     "reput_delay_for_success": 6,
     "reput_delay_for_failure": 3,
-    "reput_ttr": 60
+    "reput_ttr": 60,
+    "success_threshold": 1,
+    "failure_threshold": 3
   },
 
   // Currency exchange vendors
