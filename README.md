@@ -1,8 +1,8 @@
 ## Notes to Aftership
 ---
-After git clone and cd, run `npm install`.
-Put the `aftership.json` file under `config` folder.
-Then run:
+* After git clone and cd, run `npm install`.
+* Put the `aftership.json` file under `config` folder.
+* Then run:
 `NODE_ENV=aftership node index.js`
 
 ## The challenge
