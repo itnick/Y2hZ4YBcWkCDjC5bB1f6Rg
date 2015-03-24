@@ -8,6 +8,7 @@ var mongodb = require('mongodb');
 var sprintf = require("sprintf-js").sprintf;
 var winston = require('winston');
 var joi = require('joi');
+var os = require('os');
 
 // Load config
 // Beanstalkd
@@ -47,10 +48,13 @@ var logger = new (winston.Logger)({
 // Other variables
 var number_of_success = 0;
 var number_of_failure = 0;
+var hostname = os.hostname();
+var pid = process.pid;
 var payload_string;
 var mongo_database;
 
-logger.debug('Process ID: %s', process.pid);
+logger.info('Hostname: %s', hostname);
+logger.info('Process ID: %s', pid);
 
 var exitProcessWithError = function() {
 	process.exit(1);
@@ -117,7 +121,7 @@ mongodb_client.connect(mongodb_uri, function(error, database) {
 var insertDocument = function(database, document, callback) {
 
 	var collection = database.collection(mongodb_collection);
-	collection.insert(document, function(err, result) {
+	collection.insert(document, function(error, result) {
 		callback(result);
 	});
 };
@@ -227,8 +231,11 @@ var reserveJob = function() {
 					"from": currency_from,
 					"to": currency_to,
 					"rate": exchange_rate,
+					"hostname": hostname,
+					"pid": pid,
 					"created_at": new Date()
 				};
+				logger.debug('document: ', document);
 
 				insertDocument(mongo_database, document, function() {
 					logger.info('Added a document to Mongodb.');
