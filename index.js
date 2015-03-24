@@ -52,9 +52,11 @@ var hostname = os.hostname();
 var pid = process.pid;
 var payload_string;
 var mongo_database;
+var node_env = process.env.NODE_ENV;
 
 logger.info('Hostname: %s', hostname);
 logger.info('Process ID: %s', pid);
+logger.info('Node Environment: %s', node_env);
 
 var exitProcessWithError = function() {
 	process.exit(1);
@@ -205,10 +207,9 @@ var reserveJob = function() {
 
 		payload_string = payload.toString();
 		logger.debug('payload_string: %s', payload_string);
-		payload_json = JSON.parse(payload);
 
 		// Validate payload
-		joi.validate(payload_json, payload_schema, function(error, value) {
+		joi.validate(payload_string, payload_schema, function(error, value) {
 
 			if (!error) { // No error
 				amount = value.amount;
