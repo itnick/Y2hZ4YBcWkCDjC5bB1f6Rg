@@ -7,6 +7,7 @@ var cheerio = require('cheerio');
 var mongodb = require('mongodb');
 var sprintf = require("sprintf-js").sprintf;
 var winston = require('winston');
+var joi = require('joi');
 
 // Load config
 // Beanstalkd
@@ -26,6 +27,12 @@ var reput_delay_for_failure = job_config.reput_delay_for_failure;
 var reput_ttr = job_config.reput_ttr;
 var success_threshold = job_config.success_threshold;
 var failure_threshold = job_config.failure_threshold;
+// Payload schema
+var payload_schema = joi.object().keys({
+	amount: joi.number().integer().min(1).required(),
+	from: joi.string().length(3).uppercase().required(),
+	to: joi.string().length(3).uppercase().required()
+});
 // XE config
 var xe_config = config.get('currency_exchange_vendors');
 var xe_url = xe_config[0].url;
@@ -117,9 +124,9 @@ var insertDocument = function(database, document, callback) {
 
 
 // Processor
-var processor = function(currency_from, currency_to, callback) {
+var processor = function(amount, currency_from, currency_to, callback) {
 
-	var url = sprintf(xe_url, currency_from, currency_to);
+	var url = sprintf(xe_url, amount, currency_from, currency_to);
 	logger.debug('url: %s', url);
 
 	var request_options = {
@@ -167,7 +174,11 @@ var processor = function(currency_from, currency_to, callback) {
 
 var reserveJob = function() {
 
+	var amount;
+	var currency_from;
+	var currency_to;
 	var document;
+	var payload_json;
 
 	var request_options = {
 		url: xe_url,
@@ -190,17 +201,33 @@ var reserveJob = function() {
 
 		payload_string = payload.toString();
 		logger.debug('payload_string: %s', payload_string);
+		payload_json = JSON.parse(payload);
+
+		// Validate payload
+		joi.validate(payload_json, payload_schema, function(error, value) {
+
+			if (!error) { // No error
+				amount = value.amount;
+				currency_from = value.from;
+				currency_to = value.to;
+
+			} else {  
+				logger.error('Payload validation error: %s', JSON.stringify(error));
+				exitProcessWithError();
+			}
+		});
 
 		// Process the payload
-		processor('HKD', 'USD', function(error, exchange_rate) {
+		processor(amount, currency_from, currency_to, function(error, exchange_rate) {
 
 			if (!error) { // No error
 
 				document = {
-					"from": "HKD",
-					"to": "USD",
-					"created_at": new Date(),
-					"rate": exchange_rate
+					"amount": amount,
+					"from": currency_from,
+					"to": currency_to,
+					"rate": exchange_rate,
+					"created_at": new Date()
 				};
 
 				insertDocument(mongo_database, document, function() {
