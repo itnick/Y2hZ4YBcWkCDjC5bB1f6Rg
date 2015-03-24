@@ -234,6 +234,7 @@ var reserveJob = function() {
 					"rate": exchange_rate,
 					"hostname": hostname,
 					"pid": pid,
+					"jobid": jobid,
 					"created_at": new Date()
 				};
 				logger.debug('document: ', document);
