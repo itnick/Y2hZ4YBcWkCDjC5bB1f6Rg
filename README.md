@@ -1,3 +1,10 @@
+## Notes to Aftership
+---
+After git clone and cd, run `npm install`.
+Put the `aftership.json` file under `config` folder.
+Then run:
+`NODE_ENV=aftership node index.js`
+
 ## The challenge
 ---
 
@@ -78,3 +85,4 @@ Scale horizontally (can run in more than 1 process in many different machines)
 ## Help?
 ---
 am9ic0BhZnRlcnNoaXAuY29t
+
