@@ -1,0 +1,33 @@
+{
+  // Logger level: debug, info, warn, error
+  "logger_level": "debug",
+
+  // Beanstalkd
+  "beanstalkd": {
+    "host": "localhost",
+    "port": 11300,
+    "api_key": "",
+    "tube": "itnick"
+  },
+
+  // Mongodb
+  "mongodb": {
+    "uri": "mongodb://dbuser:dbpassword012345.mongolab.com:56789/sample-db",
+    "collection": "aftership-challenge"
+  },
+
+  // Job config
+  "job": {
+    "reput_priority": 1,
+    "reput_delay_for_success": 6,
+    "reput_delay_for_failure": 3,
+    "reput_ttr": 60
+  },
+
+  // Currency exchange vendors
+  "currency_exchange_vendors": [
+    {"vendor_id": 1, "vendor_name": "xe", "url": "http://laravel4.local/XE_ (HKD_USD) Hong Kong Dollar to US Dollar Rate.html?Amount=1&From=%s&To=%s"}
+    // {"vendor_id": 1, "vendor_name": "xe", "url": "http://www.google.com/123?Amount=1&From=HKD&To=USD"}
+    // {"vendor_id": 1, "vendor_name": "xe", "url": "http://www.xe.com/currencyconverter/convert/?Amount=1&From=HKD&To=USD"}
+  ]
+}
