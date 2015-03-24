@@ -1,10 +1,10 @@
 {
   // Logger level: debug, info, warn, error
-  "logger_level": "debug",
+  "logger_level": "info",
 
   // Beanstalkd
   "beanstalkd": {
-    "host": "localhost",
+    "host": "challenge.aftership.net",
     "port": 11300,
     "api_key": "",
     "tube": "itnick"
@@ -13,7 +13,7 @@
   // Mongodb
   "mongodb": {
     "uri": "mongodb://dbuser:dbpassword012345.mongolab.com:56789/sample-db",
-    "collection": "aftership-itnick"
+    "collection": "aftership-challenge"
   },
 
   // Job config
@@ -28,8 +28,8 @@
 
   // Currency exchange vendors
   "currency_exchange_vendors": [
-    {"vendor_id": 1, "vendor_name": "xe", "url": "http://laravel4.local/XE_ (HKD_USD) Hong Kong Dollar to US Dollar Rate.html?Amount=%s&From=%s&To=%s"}
+    // {"vendor_id": 1, "vendor_name": "xe", "url": "http://laravel4.local/XE_ (HKD_USD) Hong Kong Dollar to US Dollar Rate.html?Amount=%s&From=%s&To=%s"}
     // {"vendor_id": 1, "vendor_name": "xe", "url": "http://www.google.com/123?Amount=%s&From=%s&To=%s"}
-    // {"vendor_id": 1, "vendor_name": "xe", "url": "http://www.xe.com/currencyconverter/convert/?Amount=%s&From=%s&To=%s"}
+    {"vendor_id": 1, "vendor_name": "xe", "url": "http://www.xe.com/currencyconverter/convert/?Amount=%s&From=%s&To=%s"}
   ]
 }
